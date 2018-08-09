@@ -6,3 +6,7 @@ html, body {
   overflow: hidden;
   color: white;
 }
+
+// For Tent CSS
+@import "tent-custom.scss";
+@import "~tent-css/src/tent.scss";

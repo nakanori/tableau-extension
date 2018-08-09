@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "js-logger": "^1.4.1",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "tent-css": "^1.4.3"
   }
 }
