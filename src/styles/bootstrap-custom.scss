@@ -1,0 +1,9 @@
+@import 'color.scss';
+
+$theme-colors: (
+  primary: $blue,
+  success: #ced4da, // Form のバリデーション success 時の 緑色の border を表示したくないため
+  info: $cyan,
+  light: $light-gray,
+  danger: $red
+);

@@ -2,8 +2,140 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>webpack 4 quickstart</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>MAGELLAN BLOCKS</title>
   </head>
   <body>
+    <!-- ローディング（マスク） -->
+    <div id="loading">
+      <div class="loading-icon"></div>
+    </div>
+
+    <!-- メイン画面 -->
+    <div class="container-fluid" style="display: none">
+      <form class="needs-validation pt-3 pb-3" onsubmit="return false;">
+
+        <div class="alert alert-primary" role="alert" style="display: none">
+          <span>データセット.テーブルID (プロジェクトID) に結果が出力されました。データソースとして取り込んでください</span>
+          <button id="close-alert" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!-- テキスト分析の種類の選択フィールド -->
+        <div id="analyzeType" class="form-group">
+          <label class="control-label">分析内容</label>
+          <select class="form-control" required>
+            <option value="annotateText">構文解析</option>
+            <option value="analyzeEntities">エンティティ分析</option>
+            <option value="analyzeSentiment">感情分析</option>
+            <option value="analyzeEntitySentiment">エンティティ感情分析</option>
+          </select>
+          <div class="invalid-feedback">選択してください</div>
+        </div>
+
+        <!-- 入力情報 -->
+        <div class="form-row">
+          <div id="inputTable" class="col-md-6 mb-3">
+            <label class="control-label">分析するテーブル（データソース）</label>
+            <select class="form-control" required>
+              <option selected>選択してください</option>
+              <option value="1">datasetIDA.tableIDA (projectIDA)</option>
+              <option value="2">datasetIDB.tableIDB (projectIDB)</option>
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+          <div id="inputTextColumn" class="col-md-3 mb-3">
+            <label>分析結果を紐付けるキーとなるカラム</label>
+            <select class="form-control" required>
+              <option selected>選択してください</option>
+              <option value="1">キー#1</option>
+              <option value="2">キー#2</option>
+            </select>
+            <div class="invalid-feedback">選択してください</div>
+          </div>
+          <div id="inputKeyColumn" class="col-md-3 mb-3">
+            <label>分析するテキストのカラム</label>
+            <select class="form-control" required>
+              <option selected>選択してください</option>
+              <option value="1">テキスト#1</option>
+              <option value="2">テキスト#2</option>
+            </select>
+            <div class="invalid-feedback">選択してください</div>
+          </div>
+        </div>
+  
+        <!-- 結果を新規テーブルに出力するか、データソースを上書きするかの選択フィールド -->
+        <div id="outputMode" class="form-group">
+          <label class="control-label">結果を</label>
+          <div class="btn-group" role="group">
+            <button type="button" value="create" class="btn btn-secondary">新規テーブルに出力する</button>
+            <button type="button" value="override" class="btn btn-outline-secondary">既存のデータソースに上書きする</button>
+          </div>
+        </div>
+
+        <!-- 出力先テーブルの選択フィールド（新規の場合） -->
+        <div id="outputCreate" class="form-group">
+          <label>結果を出力するテーブル</label>
+          <div class="form-row">
+            <div id="outputProjectId" class="col-md-4 mb-3">
+              <select class="form-control" required>
+                <option selected>プロジェクトID</option>
+                <option value="1">projectIDA</option>
+                <option value="2">projectIDB</option>
+              </select>
+              <div class="invalid-feedback">選択してください</div>
+            </div>
+            <div id="outputDatasetId" class="col-md-4 mb-3">
+              <input type="text" class="form-control" placeholder="データセットID" required>
+              <div class="invalid-feedback">入力してください</div>
+            </div>
+            <div id="outputTableId" class="col-md-4 mb-3">
+              <input type="text" class="form-control"  placeholder="テーブルID" required>
+              <div class="invalid-feedback">入力してください</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 出力先テーブルの選択フィールド（上書きの場合） -->
+        <div id="outputOverride" class="form-group">
+          <label class="control-label">結果を上書きするテーブル</label>
+          <select class="form-control">
+            <option value="1">datasetIDA.tableIDA (projectIDA)</option>
+            <option value="2">datasetIDB.tableIDB (projectIDB)</option>
+          </select>
+          <div class="invalid-feedback"></div>
+        </div>
+
+        <!-- 出力されるカラム情報 -->
+        <div id="outputTableInfo" class="form-group">
+          <label class="control-label">結果のテーブル情報</label>
+          <div class="table-responsive">
+            <table id="outputColumns" class="table table-bordered" fixed-header>
+              <thead>
+                <tr>
+                  <th scope="col">列名</th>
+                  <th scope="col">型</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- 動的に追加 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Submmit / Cancel -->
+        <div class="d-flex">
+          <button id="submit" type="button" class="btn btn-primary">分析開始</button>
+          <!--button type="button" class="btn btn-link">Cancel</button-->
+          <div class="ml-auto">
+            <a target="_blank" href="https://www.magellanic-clouds.com/blocks/">
+              <div class="logo"></div>
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
   </body>
 </html>

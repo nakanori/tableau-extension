@@ -1,16 +1,24 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
+const path = require('path'); 
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: './src/index.js',
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'src'),
+    watchContentBase: true,
+    compress: true,
+    progress: true,
+    hot: true,
+    port: 8080
+  },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        loader: "babel-loader"
       },
       {
         test: /\.html$/,
@@ -29,6 +37,14 @@ module.exports = {
             "sass-loader"
         ]
       },
+      {
+        test: /\.svg$/,
+        loader: "url-loader?mimetype=image/svg+xml"
+      },
+      {
+        test: /\.ico$/,
+        loader: 'file-loader?name=[name].[ext]'
+      }
     ]
   },
   performance: {
@@ -37,12 +53,13 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
-        NODE_ENV: JSON.stringify(process.env.WEBPACK_MODE) 
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV) 
       }
     }),
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "./index.html"
     })
-  ]
+  ],
 };

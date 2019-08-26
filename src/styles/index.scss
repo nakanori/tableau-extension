@@ -1,12 +1,37 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:700,400,300,200,100);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Mono:400,700);
+
+@import 'color.scss';
+@import 'loading.scss';
+
 html, body {
   width:  100%;
   height: 100%;
-  margin: 0px;
-  padding: 0px;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   color: white;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: auto;
+  font-size: 13px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
 
-// For Tent CSS
-@import "tent-custom.scss";
-@import "~tent-css/src/tent.scss";
+.logo {
+  height: 30px;
+  width: 30px;
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto;
+  background-image: url("./img/logo_blue.svg");
+}
+
+@import 'bootstrap-custom.scss';
+@import 'bootstrap/bootstrap.scss';
